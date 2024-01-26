@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "url-shortener",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple URL shortener API built with Node.js, Express, Typescript and Prisma.",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -15,8 +15,17 @@
     "test:unit": "vitest --config ./vitest.config.js",
     "test:integration": "vitest --config ./vitest.config.integration.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "URL shortener",
+    "URL shortening",
+    "Express",
+    "Node.js",
+    "Prisma",
+    "Typescript",
+    "API",
+    "Backend"
+  ],
+  "author": "Lucas Nicolas Villanueva",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.8.1",
