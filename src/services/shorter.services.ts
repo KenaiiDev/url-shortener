@@ -25,6 +25,13 @@ export const shorterService = {
     })
   },
   getByShortUrl: async (shortUrl: string) => {
+    return await prisma.dbUrls.findUniqueOrThrow({
+      where: {
+        shortUrl
+      }
+    })
+  },
+  getByShortUrlAndIncrement: async (shortUrl: string) => {
     return await prisma.dbUrls.update({
       where: {
         shortUrl

@@ -42,7 +42,23 @@ const getUrlByShortId = async (req: Request<ShortUrlType>, res: Response, next: 
     const { shortUrl } = req.params
     const url = await shorterService.getByShortUrl(shortUrl)
     if (url === null || url === undefined) return httpResponse.NOT_FOUND(res, 'Url not found')
-    httpResponse.OK_REDIRECT(res, url)
+    httpResponse.OK(res, url)
+  } catch (error) {
+    next(error)
+  }
+}
+
+const getUrlByShortIdAndIncrement = async (
+  req: Request<ShortUrlType>,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { shortUrl } = req.params
+    console.log('Requested')
+    const url = await shorterService.getByShortUrlAndIncrement(shortUrl)
+    if (url === null || url === undefined) return httpResponse.NOT_FOUND(res, 'Url not found')
+    httpResponse.OK(res, url)
   } catch (error) {
     next(error)
   }
@@ -59,4 +75,11 @@ const deleteUrlById = async (req: Request<IdUrlType>, res: Response, next: NextF
   }
 }
 
-export { shortUrl, getAllUrl, getUrlById, getUrlByShortId, deleteUrlById }
+export {
+  shortUrl,
+  getAllUrl,
+  getUrlById,
+  getUrlByShortId,
+  deleteUrlById,
+  getUrlByShortIdAndIncrement
+}

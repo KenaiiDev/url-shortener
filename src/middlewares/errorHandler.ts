@@ -20,6 +20,10 @@ export const ERROR_HANDLER = {
     const message = 'Error on data validation'
     return httpResponse.UNPROCESSABLE_ENTITY(res, message, err)
   },
+  NotFoundError: (res: Response, _err: any) => {
+    const message = 'Resource not found'
+    return httpResponse.NOT_FOUND(res, message)
+  },
   defaultError: (res: Response, err: any) => {
     const message = 'Internal server error'
     return httpResponse.INTERNAL_SERVER_ERROR(res, message, err)
@@ -28,6 +32,8 @@ export const ERROR_HANDLER = {
 
 export const errorHandler = (err: any, _req: Request, res: Response, _next: NextFunction) => {
   let option = err?.name
+
+  console.log({ option, err })
 
   if (err instanceof ZodError) {
     option = 'ZodError'
