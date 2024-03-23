@@ -12,6 +12,10 @@ export const ERROR_HANDLER = {
     const message = 'Inconsistent column data'
     return httpResponse.BAD_REQUEST(res, message, err)
   },
+  P2025: (res: Response, err: Prisma.PrismaClientKnownRequestError) => {
+    const message = 'Foreign key constraint failed'
+    return httpResponse.BAD_REQUEST(res, message, err)
+  },
   PrismaClientValidationError: (res: Response, err: Prisma.PrismaClientValidationError) => {
     const message = 'Prisma validation error on request'
     return httpResponse.UNPROCESSABLE_ENTITY(res, message, err.message)
@@ -33,18 +37,22 @@ export const ERROR_HANDLER = {
 export const errorHandler = (err: any, _req: Request, res: Response, _next: NextFunction) => {
   let option = err?.name
 
-  console.log({ option, err })
+  console.log({ type: 'Before codes', option, err })
 
   if (err instanceof ZodError) {
     option = 'ZodError'
   }
 
-  if (err instanceof Prisma.PrismaClientValidationError) {
-    option = 'PrismaClientValidationError'
+  if (option === undefined) {
+    if (err instanceof Prisma.PrismaClientValidationError) {
+      option = 'PrismaClientValidationError'
+    }
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      option = err.code
+    }
   }
-  if (err instanceof Prisma.PrismaClientKnownRequestError) {
-    option = err.code
-  }
+
+  console.log({ type: 'after codes', option, err })
 
   const handler = ERROR_HANDLER[option as keyof typeof ERROR_HANDLER] ?? ERROR_HANDLER.defaultError
 
