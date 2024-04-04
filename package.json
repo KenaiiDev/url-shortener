@@ -9,7 +9,7 @@
     "devBuild": "tsup src/index.ts --watch",
     "devRun": "node --env-file=.env --watch dist/index.js",
     "build": "npm install && tsup",
-    "start": "node --env-file=.env ./dist/index.js",
+    "start": "node ./dist/index.js",
     "lint": "eslint \"src/**/*.{js,ts}\"",
     "prettier": "prettier --config .prettierrc --write 'src/**/*.{js,ts}'",
     "test:unit": "vitest --config ./vitest.config.js",
